@@ -86,7 +86,7 @@ def get_outfit_prompt(recommendation):
     """패션 추천을 간단한 영어 프롬프트로 변환합니다."""
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Convert the fashion recommendation into a short, clear English description for image generation. Keep it under 200 characters."},
                 {"role": "user", "content": recommendation}
