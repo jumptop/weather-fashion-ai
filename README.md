@@ -40,10 +40,10 @@
 
 ```mermaid
 flowchart TD
-    A[사용자 입력<br>(도시, 성별, 키, 몸무게, 스타일)] --> B[날씨 정보 조회<br>(OpenWeather API)]
-    B --> C[패션 추천 생성<br>(OpenAI GPT)]
-    C --> D[패션 이미지 생성<br>(Hugging Face Stable Diffusion)]
-    D --> E[결과 출력<br>(Streamlit UI)]
+    A[사용자 입력 (도시, 성별, 키, 몸무게, 스타일)] --> B[날씨 정보 조회 (OpenWeather API)]
+    B --> C[패션 추천 생성 (OpenAI GPT)]
+    C --> D[패션 이미지 생성 (Hugging Face Stable Diffusion)]
+    D --> E[결과 출력 (Streamlit UI)]
     C --> E
     B --> E
 ```
