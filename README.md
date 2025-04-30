@@ -64,3 +64,49 @@ flowchart TD
 ---
 
 ## 환경 변수(.env 예시)
+OPENWEATHER_API_KEY=openweather_api_key
+OPENAI_API_KEY=openai_api_key
+HUGGINGFACE_API_KEY=huggingface_api_key
+
+
+---
+
+## 설치 및 실행 방법
+
+1. **필수 패키지 설치**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **환경 변수 파일(.env) 생성 및 API 키 입력**
+
+3. **앱 실행**
+   ```bash
+   streamlit run app.py
+   ```
+
+---
+
+## requirements.txt 예시
+streamlit
+requests
+torch
+openai
+pillow
+python-dotenv
+diffusers
+
+---
+
+## 참고 및 주의사항
+
+- Hugging Face API는 무료로 하루 약 30,000회 요청이 가능합니다.
+- OpenAI, Hugging Face, OpenWeather API 키가 필요합니다.
+- 이미지는 AI가 자동 생성하므로 실제 패션과 다를 수 있습니다.
+
+---
+
+## 기여 및 문의
+
+- Pull Request, Issue 환영합니다!
+- 문의: [your-email@example.com]
