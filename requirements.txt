@@ -1,0 +1,7 @@
+streamlit
+requests
+torch
+openai
+pillow
+python-dotenv
+diffusers 
