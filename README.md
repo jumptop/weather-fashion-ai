@@ -1,112 +1,128 @@
-# AI 패션 추천 어드바이저 (with.weather)
+# 패션 추천 AI (with.weather)
 
-## 소개
+## 프로젝트 개요
 
-**AI 패션 추천 어드바이저**는 사용자의 위치(도시), 성별, 키, 몸무게, 스타일 선호도, 그리고 실시간 날씨 정보를 바탕으로  
-최적의 패션 코디를 추천하고, AI 이미지 생성 모델을 통해 해당 스타일의 이미지를 시각화해주는 웹 애플리케이션입니다.
+**패션 추천 AI**는 실시간 날씨 정보와 사용자의 개인 정보(성별, 키, 몸무게, 스타일 선호도)를 분석하여 최적의 패션 코디를 추천하고, 인공지능 이미지 생성 기술을 통해 시각화해주는 웹 애플리케이션입니다.
 
-- 날씨 API, OpenAI GPT, Hugging Face Diffusers(Stable Diffusion) 등 다양한 AI/외부 API를 활용합니다.
-- Streamlit 기반의 직관적인 UI를 제공합니다.
+여러 API와 인공지능 모델을 활용하여 사용자에게 맞춤형 패션 추천을 제공합니다:
+- **OpenWeather API**: 실시간 날씨 정보 수집
+- **OpenAI GPT**: 날씨와 체형에 맞는 패션 코디 추천
+- **Hugging Face Stable Diffusion**: 추천된 패션의 시각화
 
----
+## 핵심 기능
 
-## 주요 기능
+1. **실시간 날씨 기반 패션 추천**
+   - 도시별 온도, 날씨 상태, 습도 등 실시간 정보 반영
+   - 날씨에 적합한 옷차림과 레이어링 제안
 
-1. **날씨 정보 조회**  
-   - OpenWeather API를 통해 입력한 도시의 실시간 날씨(기온, 상태, 습도)를 조회합니다.
+2. **체형 맞춤형 스타일링**
+   - BMI 계산을 통한 체형 분석
+   - 성별과 체형에 어울리는 실루엣 및 디자인 제안
 
-2. **맞춤형 패션 추천**  
-   - 사용자의 성별, 키, 몸무게, 스타일 선호도, 날씨 정보를 바탕으로 OpenAI GPT를 활용해 텍스트 패션 코디를 추천합니다.
+3. **개인 스타일 선호도 반영**
+   - 선호하는 색상, 스타일, 브랜드 등 고려
+   - 개인화된 패션 추천 생성
 
-3. **AI 패션 이미지 생성**  
-   - 추천된 패션 코디를 바탕으로, Hugging Face의 Stable Diffusion API를 통해 해당 스타일의 이미지를 생성합니다.
+4. **AI 이미지 생성**
+   - 추천된 패션을 시각화한 이미지 생성
+   - 사용자의 성별과 체형을 반영한 패션 이미지 제공
 
-4. **직관적인 웹 UI**  
-   - Streamlit을 사용하여, 사이드바 입력 → 추천 결과 및 이미지 표시까지 한 번에 제공합니다.
-
----
-
-## 사용 방법
-
-1. **사이드바에서 정보 입력**
-   - 도시 이름(영문), 성별, 키, 몸무게, 스타일 선호도를 입력합니다.
-2. **'패션 추천 받기' 버튼 클릭**
-3. **결과 확인**
-   - 날씨 정보, 맞춤형 패션 추천, AI가 생성한 패션 이미지가 순서대로 표시됩니다.
-
----
-
-## 전체 구조 다이어그램
+## 시스템 아키텍처
 
 ```mermaid
-flowchart TD
-    A[사용자 입력 (도시, 성별, 키, 몸무게, 스타일)] --> B[날씨 정보 조회 (OpenWeather API)]
-    B --> C[패션 추천 생성 (OpenAI GPT)]
-    C --> D[패션 이미지 생성 (Hugging Face Stable Diffusion)]
-    D --> E[결과 출력 (Streamlit UI)]
-    C --> E
-    B --> E
+graph TD
+    A[사용자 입력] --> B[Streamlit 웹 인터페이스]
+    B --> C{OpenWeather API}
+    C --> D[날씨 데이터 분석]
+    D --> E{OpenAI GPT}
+    E --> F[패션 추천 생성]
+    F --> G{Hugging Face API}
+    G --> H[패션 이미지 생성]
+    H --> I[사용자에게 결과 표시]
+    F --> I
 ```
 
----
+## 기술 스택
 
-## 주요 코드 구조
-
-- **app.py**
-  - 환경 변수 로드 및 API 키 설정
-  - Streamlit UI 구성 (사이드바 입력, 메인 결과 영역)
-  - `get_weather`: 도시의 날씨 정보 조회
-  - `get_fashion_recommendation`: GPT를 활용한 패션 추천 생성
-  - `get_outfit_prompt`: 추천 결과를 이미지 생성용 프롬프트로 변환
-  - `generate_image_with_huggingface`: Stable Diffusion API로 패션 이미지 생성
-  - 메인 실행 로직: 입력값 검증 → 날씨 조회 → 패션 추천 → 이미지 생성 → 결과 표시
-
----
-
-## 환경 변수(.env 예시)
-OPENWEATHER_API_KEY=openweather_api_key
-OPENAI_API_KEY=openai_api_key
-HUGGINGFACE_API_KEY=huggingface_api_key
-
-
----
+- **Frontend/Backend**: Streamlit
+- **AI/ML**: 
+  - OpenAI GPT-4o-mini (텍스트 기반 패션 추천)
+  - Hugging Face Stable Diffusion (이미지 생성)
+- **APIs**:
+  - OpenWeather API (날씨 정보)
+  - OpenAI API (GPT 모델)
+  - Hugging Face Inference API (Stable Diffusion)
+- **기타 라이브러리**:
+  - Python-dotenv (환경변수 관리)
+  - Pillow (이미지 처리)
+  - Requests (API 통신)
 
 ## 설치 및 실행 방법
 
-1. **필수 패키지 설치**
+### 1. 필수 요구사항
+- Python 3.8 이상
+- pip (Python 패키지 관리자)
+- 인터넷 연결
+
+### 2. 설치 과정
+
+1. **저장소 클론 또는 다운로드**
+   ```bash
+   git clone <저장소 URL>
+   cd Weather_fashion_AI
+   ```
+
+2. **가상환경 생성 및 활성화**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # Windows: venv\Scripts\activate
+   ```
+
+3. **필수 패키지 설치**
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **환경 변수 파일(.env) 생성 및 API 키 입력**
-
-3. **앱 실행**
-   ```bash
-   streamlit run app.py
+4. **환경 변수 설정**
+   `.env` 파일을 생성하고 다음 API 키를 설정:
+   ```
+   OPENWEATHER_API_KEY=your_openweather_api_key
+   OPENAI_API_KEY=your_openai_api_key
+   HUGGINGFACE_API_KEY=your_huggingface_api_key
    ```
 
----
+### 3. 실행 방법
+```bash
+streamlit run app.py
+```
+웹 브라우저에서 자동으로 `http://localhost:8501`에 접속됩니다.
 
-## requirements.txt 예시
-streamlit
-requests
-torch
-openai
-pillow
-python-dotenv
-diffusers
+## 사용 가이드
 
----
+1. **사이드바에서 정보 입력**
+   - 도시 이름 (영문): 날씨 정보를 확인할 도시 (예: Seoul, Tokyo, New York)
+   - 성별: 남성/여성 선택
+   - 키(cm)와 몸무게(kg): 체형에 맞는 패션 추천을 위한 정보
+   - 스타일 선호도: 선호하는 스타일, 색상, 브랜드 등을 자유롭게 입력
 
-## 참고 및 주의사항
+2. **'패션 추천 받기' 버튼 클릭**
 
-- Hugging Face API는 무료로 하루 약 30,000회 요청이 가능합니다.
-- OpenAI, Hugging Face, OpenWeather API 키가 필요합니다.
-- 이미지는 AI가 자동 생성하므로 실제 패션과 다를 수 있습니다.
+3. **결과 확인**
+   - 현재 날씨 정보 표시 (온도, 날씨 상태, 습도)
+   - 패션 추천 텍스트
+   - AI가 생성한 패션 이미지
 
----
+## 개발자 정보
 
-## 기여 및 문의
+- 본 프로젝트는 날씨 정보와 인공지능을 활용한 패션 추천 서비스 구현을 목표로 개발되었습니다.
+- 기여 및 문의: [개발자 연락처 또는 이메일]
 
-- Pull Request, Issue 환영합니다!
-- 문의: [your-email@example.com]
+## 라이선스 및 주의사항
+
+- 본 애플리케이션은 API 키가 필요한 외부 서비스에 의존합니다.
+- API 사용량 제한:
+  - OpenAI API: 유료 사용량에 따라 요금 발생
+  - Hugging Face API: 하루 약 30,000개의 무료 요청 가능
+  - OpenWeather API: 무료 플랜의 경우 분당 60회 제한
+
+- AI 생성 이미지는 실제 패션과 차이가 있을 수 있으며, 참고용으로만 사용하세요.
